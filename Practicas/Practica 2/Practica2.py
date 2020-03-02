@@ -69,3 +69,6 @@ for i in range(5):
     p.join()
     p2 = hilosP[i]
     p2.join()
+
+
+#clonacion y push realizados correctamente
