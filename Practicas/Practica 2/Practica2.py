@@ -1,4 +1,3 @@
-
 import re
 import threading as th
 import math as m
@@ -52,7 +51,7 @@ def productor(id):
                 if(len(zcNumeros[aux]) is 0):
                     zcNumeros[aux] = simbolo
                     #print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
-                    print(zcNumeros)
+                    #print(zcNumeros)
                     semZonaCriticaN[aux].release()
                     break
                 else:
@@ -67,13 +66,14 @@ def productor(id):
                     zcLetras[aux] = simbolo
                     #print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
                     semZonaCriticaL[aux].release()
-                    print(zcLetras)
+                    #print(zcLetras)
                     break
                 else:
                     semZonaCriticaL[aux].release()
                     time.sleep(0.2)
                     aux += 1
-                    break
+    print("Productor "+str(id)+" termino de producir")                
+    
 
 def consumidor(id):
     aux = 0
@@ -89,49 +89,63 @@ def consumidor(id):
                     zona = 0
             #consumir dependiendo de paridad
             if(zona == 0): #numeros
-                semZonaCriticaN[aux].acquire()
+                
                 if (len(zcNumeros[aux]) is not 0):
-                    letraR = zcNumeros[aux]
+                    semZonaCriticaN[aux].acquire()
+                    if (len(zcNumeros[aux]) is not 0):
+                        letraR = zcNumeros[aux]
                     #escribiendo
                     #semArchivo.acquire()
-                    if(letraR == tipoLetra[id]):
-                        print(archivos[id])
-                        """open(archivos[id])
+                        """if(letraR == tipoLetra[id]):
+                            print(archivos[id])
+                        open(archivos[id])
                         archivos[id].write(letraR+"\n")
                         semArchivo.release()
                     if(letraR == tipoNumero[id]):
                         archivos[id+5].write(letraR+"\n")
                         semArchivo.release()"""
 
-                    print("Consumidor "+str(id)+" consumiendo: ", letraR)
-                    zcNumeros[aux] = ""
-                    semZonaCriticaN[aux].release()
-                    break
+                        print("Consumidor "+str(id)+" consumiendo: ", letraR)
+                        zcNumeros[aux] = ""
+                        semZonaCriticaN[aux].release()
+                        break
+                    else:
+                        semZonaCriticaN[aux].release()
+                        time.sleep(0.2)
+                        aux += 1
+                        break
                 else:
-                    semZonaCriticaN[aux].release()
+                    #semZonaCriticaN[aux].release()
                     time.sleep(0.2)
                     aux += 1
             else: #letras
-                semZonaCriticaL[aux].acquire()
+                
                 if (len(zcLetras[aux]) is not 0):
-                    letraR = zcLetras[aux]
-                    #escribiendo
-                    #semArchivo.acquire()
-                    if(letraR == tipoLetra[id]):
-                        print(archivos[id])
-                        """open(archivos[id])
-                        archivos[id].write(letraR+"\n")
-                        semArchivo.release()
-                    if(letraR == tipoNumero[id]):
-                        archivos[id+5].write(letraR+"\n")
-                        semArchivo.release()"""
+                    semZonaCriticaL[aux].acquire()
+                    if (len(zcLetras[aux]) is not 0):
+                        letraR = zcLetras[aux]
+                        #escribiendo
+                        #semArchivo.acquire()
+                        """if(letraR == tipoLetra[id]):
+                            print(archivos[id])
+                            open(archivos[id])
+                            archivos[id].write(letraR+"\n")
+                            semArchivo.release()
+                        if(letraR == tipoNumero[id]):
+                            archivos[id+5].write(letraR+"\n")
+                            semArchivo.release()"""
 
-                    print("Consumidor "+str(id)+" consumiendo: ", letraR)
-                    zcLetras[aux] = ""
-                    semZonaCriticaL[aux].release()
-                    break
+                        print("Consumidor "+str(id)+" consumiendo: ", letraR)
+                        zcLetras[aux] = ""
+                        semZonaCriticaL[aux].release()
+                    else:
+                        semZonaCriticaL[aux].release()
+                        time.sleep(0.2)
+                        aux += 1
+                        break
+                        
                 else:
-                    semZonaCriticaL[aux].release()
+                    #semZonaCriticaL[aux].release()
                     time.sleep(0.2)
                     aux += 1
     
