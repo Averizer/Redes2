@@ -7,7 +7,7 @@ import time
 #Constantes
 productores = 5
 consumidores = 5
-Nproducciones = 2
+Nproducciones = 3
 TamBuffer = 4
 tipoLetra = ['A', 'B', 'C', 'D', 'E']
 tipoNumero = ['1', '2', '3', '4', '5']
@@ -38,12 +38,12 @@ for f in range(0,len(tipoLetra)):
 def productor(id):
     letra = tipoLetra[id]
     numero = tipoNumero[id]
-    print("Hola soy el hilo productor ", id)
+    #print("Hola soy el hilo productor ", id)
     aux = 0
     for i in range(Nproducciones*2):
         while True:
             #reseteo de indice
-            if(aux == 3):
+            if(aux >= 3):
                 aux = 0
             #Determina numero o letra
             if(i%2 is 0): #Numeros
@@ -51,18 +51,21 @@ def productor(id):
                 semZonaCriticaN[aux].acquire()
                 if(len(zcNumeros[aux]) is 0):
                     zcNumeros[aux] = simbolo
-                    semZonaCriticaN[aux].release()
+                    #print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
                     print(zcNumeros)
+                    semZonaCriticaN[aux].release()
                     break
                 else:
                     semZonaCriticaN[aux].release()
                     time.sleep(0.2)
                     aux += 1
+                    break
             else: #Letras
                 simbolo = letra
                 semZonaCriticaL[aux].acquire()
                 if(len(zcLetras[aux]) is 0):
                     zcLetras[aux] = simbolo
+                    #print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
                     semZonaCriticaL[aux].release()
                     print(zcLetras)
                     break
@@ -70,16 +73,22 @@ def productor(id):
                     semZonaCriticaL[aux].release()
                     time.sleep(0.2)
                     aux += 1
+                    break
 
 def consumidor(id):
     aux = 0
+    zona = 0
     for i in range(Nproducciones*2):
         while True:
             #reseteo de indice
             if(aux == 3):
                 aux = 0
+                if(zona == 0):
+                    zona = 1
+                else:
+                    zona = 0
             #consumir dependiendo de paridad
-            if(i%2 is 0): #numeros
+            if(zona == 0): #numeros
                 semZonaCriticaN[aux].acquire()
                 if (len(zcNumeros[aux]) is not 0):
                     letraR = zcNumeros[aux]
