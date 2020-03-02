@@ -71,4 +71,4 @@ for i in range(5):
     p2.join()
 
 
-#clonacion y push realizados correctamente
+#clonacion y push realizados correctamente asd
