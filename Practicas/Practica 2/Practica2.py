@@ -1,4 +1,3 @@
-
 import re
 import threading as th
 import math as m
@@ -52,7 +51,7 @@ def productor(id):
                 if(len(zcNumeros[aux]) is 0):
                     zcNumeros[aux] = simbolo
                     #print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
-                    print(zcNumeros)
+                    #print(zcNumeros)
                     semZonaCriticaN[aux].release()
                     break
                 else:
@@ -67,7 +66,7 @@ def productor(id):
                     zcLetras[aux] = simbolo
                     #print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
                     semZonaCriticaL[aux].release()
-                    print(zcLetras)
+                    #print(zcLetras)
                     break
                 else:
                     semZonaCriticaL[aux].release()
@@ -109,7 +108,7 @@ def consumidor(id):
                     break
                 else:
                     semZonaCriticaN[aux].release()
-                    time.sleep(0.2)
+                    time.sleep(0.3)
                     aux += 1
             else: #letras
                 semZonaCriticaL[aux].acquire()
@@ -132,7 +131,7 @@ def consumidor(id):
                     break
                 else:
                     semZonaCriticaL[aux].release()
-                    time.sleep(0.2)
+                    time.sleep(0.3)
                     aux += 1
     
     print("Consumidor "+str(id)+" termino de consumir")
