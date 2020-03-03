@@ -24,8 +24,8 @@ semZonaCriticaN = [None] * TamBuffer
 
 #creacion de los semaforos del buffer
 for i in range(0,TamBuffer):
-    semZonaCriticaL[i] = th.Semaphore()
-    semZonaCriticaN[i] = th.Semaphore()
+    semZonaCriticaL[i] = th.Semaphore(1)
+    semZonaCriticaN[i] = th.Semaphore(1)
 
 #creacion de nombres de archivos
 for f in range(0,len(tipoLetra)):
@@ -111,6 +111,7 @@ def consumidor(id):
                         print("Consumidor "+str(id)+" consumiendo: "+ letraR+ " iteracion: "+str(i))
                         zcNumeros[aux] = ""
                         semZonaCriticaN[aux].release()
+                        print("El valor del semaforo "+ str(id)+" Es "+ str(semZonaCriticaN[aux]._value))
                         time.sleep(0.3)
                         break
                     else:
