@@ -6,7 +6,7 @@ import time
 #Constantes
 productores = 5 #numero de productores
 consumidores = 5 #numero de consumidores
-Nproducciones = 500 #numero de producciones
+Nproducciones = 3 #numero de producciones
 TamBuffer = 4   #tamaño del buffer o seccion crítica
 tipoLetra = ['A', 'B', 'C', 'D', 'E']   #elementos de productores
 tipoNumero = ['1', '2', '3', '4', '5']  #elementos de productores
@@ -120,11 +120,9 @@ def productor(id):
                     time.sleep(0.2)
                     aux += 1
         #letras
-        if(produccionesL == 4):
-            semGlobalLL.release()
-            semGlobalLL.release()
-            semGlobalLL.release()
-            semGlobalLL.release()
+        if(produccionesL == TamBuffer):
+            for i in range(TamBuffer):
+                semGlobalLL.release()
             produccionesL = 0
         
         if(totalproducidoL == totalAproducirL):
@@ -132,11 +130,9 @@ def productor(id):
                 semGlobalLL.release()
         
         #numeros
-        if(produccionesN == 4):
-            semGlobalLN.release()
-            semGlobalLN.release()
-            semGlobalLN.release()
-            semGlobalLN.release()
+        if(produccionesN == TamBuffer):
+            for i in range(TamBuffer):
+                semGlobalLN.release()
             produccionesN = 0
         
         if(totalproducidoN == totalAproducirN):
@@ -213,22 +209,18 @@ def consumidor(id):
                     aux += 1
 
         #Letras
-        if(consumidosL == 4):
-            semGlobalVL.release()
-            semGlobalVL.release()
-            semGlobalVL.release()
-            semGlobalVL.release()
+        if(consumidosL == TamBuffer):
+            for i in range(TamBuffer):
+                semGlobalVL.release()
             consumidosL = 0
 
         if(totalconsumidoL == totalAconsumirL):
             break
 
         #Numeros
-        if(consumidosN == 4):
-            semGlobalVN.release()
-            semGlobalVN.release()
-            semGlobalVN.release()
-            semGlobalVN.release()
+        if(consumidosN == TamBuffer):
+            for i in range(TamBuffer):
+                semGlobalVN.release()
             consumidosN = 0
 
         if(totalconsumidoN == totalAconsumirN):
