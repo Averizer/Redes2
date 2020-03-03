@@ -6,7 +6,7 @@ import time
 #Constantes
 productores = 5
 consumidores = 5
-Nproducciones = 3
+Nproducciones = 2
 TamBuffer = 4
 tipoLetra = ['A', 'B', 'C', 'D', 'E']
 tipoNumero = ['1', '2', '3', '4', '5']
@@ -31,6 +31,16 @@ for i in range(0,TamBuffer):
 for f in range(0,len(tipoLetra)):
     archivos[f] = "Archivo_" + str(tipoLetra[f]) + ".txt"
     archivos[f+len(tipoLetra)] = "Archivo_" + str(tipoNumero[f]) + ".txt" 
+ 
+ 
+def vacioLleno(lista):
+    for i in lista:
+        if i != "":
+            lleno = 1
+            break
+        else:
+            lleno = 0
+    return lleno
 
 
 # Funciones para los hilos
@@ -50,7 +60,7 @@ def productor(id):
                 semZonaCriticaN[aux].acquire()
                 if(len(zcNumeros[aux]) is 0):
                     zcNumeros[aux] = simbolo
-                    #print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
+                    print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
                     #print(zcNumeros)
                     semZonaCriticaN[aux].release()
                     break
@@ -64,7 +74,7 @@ def productor(id):
                 semZonaCriticaL[aux].acquire()
                 if(len(zcLetras[aux]) is 0):
                     zcLetras[aux] = simbolo
-                    #print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
+                    print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
                     semZonaCriticaL[aux].release()
                     #print(zcLetras)
                     break
@@ -87,36 +97,27 @@ def consumidor(id):
                     zona = 1
                 else:
                     zona = 0
-            #consumir dependiendo de paridad
+            #consumir dependiendo de ZONA CRITICA
             if(zona == 0): #numeros
-                
                 if (len(zcNumeros[aux]) is not 0):
                     semZonaCriticaN[aux].acquire()
                     if (len(zcNumeros[aux]) is not 0):
                         letraR = zcNumeros[aux]
-                    #escribiendo
-                    #semArchivo.acquire()
-                        """if(letraR == tipoLetra[id]):
-                            print(archivos[id])
-                        open(archivos[id])
-                        archivos[id].write(letraR+"\n")
-                        semArchivo.release()
-                    if(letraR == tipoNumero[id]):
-                        archivos[id+5].write(letraR+"\n")
-                        semArchivo.release()"""
-
                         print("Consumidor "+str(id)+" consumiendo: ", letraR)
                         zcNumeros[aux] = ""
                         semZonaCriticaN[aux].release()
                         break
                     else:
+                        print("Se registro una sobrescritura")
                         semZonaCriticaN[aux].release()
-                        time.sleep(0.2)
+                        time.sleep(0.3)
                         aux += 1
-                        break
+                        #break
                 else:
-                    #semZonaCriticaN[aux].release()
-                    time.sleep(0.2)
+                    print("Hilo que muere =" + str(id))
+                    print(zcLetras)
+                    print(zcNumeros)
+                    time.sleep(0.3)
                     aux += 1
             else: #letras
                 
@@ -124,29 +125,22 @@ def consumidor(id):
                     semZonaCriticaL[aux].acquire()
                     if (len(zcLetras[aux]) is not 0):
                         letraR = zcLetras[aux]
-                        #escribiendo
-                        #semArchivo.acquire()
-                        """if(letraR == tipoLetra[id]):
-                            print(archivos[id])
-                            open(archivos[id])
-                            archivos[id].write(letraR+"\n")
-                            semArchivo.release()
-                        if(letraR == tipoNumero[id]):
-                            archivos[id+5].write(letraR+"\n")
-                            semArchivo.release()"""
-
                         print("Consumidor "+str(id)+" consumiendo: ", letraR)
                         zcLetras[aux] = ""
                         semZonaCriticaL[aux].release()
                     else:
-                        semZonaCriticaL[aux].release()
-                        time.sleep(0.2)
+                        print("Se registro una sobrescritura")
+                        semZonaCriticaN[aux].release()
+                        time.sleep(0.3)
                         aux += 1
-                        break
+                        #break
                         
                 else:
-                    #semZonaCriticaL[aux].release()
-                    time.sleep(0.2)
+                    semZonaCriticaL[aux].release()
+                    print("Hilo que muere =" + str(id))
+                    print(zcLetras)
+                    print(zcNumeros)
+                    time.sleep(0.3)
                     aux += 1
     
     print("Consumidor "+str(id)+" termino de consumir")

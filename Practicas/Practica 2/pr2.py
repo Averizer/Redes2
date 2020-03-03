@@ -57,7 +57,7 @@ def productor(id):
                         time.sleep(0.2)
                         break
                     else:
-                        semZonaCriticaN[aux].release()
+                        #semZonaCriticaN[aux].release()
                         aux += 1
                                
             else: #Letras
