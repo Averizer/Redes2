@@ -6,7 +6,7 @@ import time
 #Constantes
 productores = 5 #numero de productores
 consumidores = 5 #numero de consumidores
-Nproducciones = 5 #numero de producciones
+Nproducciones = 3 #numero de producciones
 TamBuffer = 4   #tamaño del buffer o seccion crítica
 tipoLetra = ['A', 'B', 'C', 'D', 'E']   #elementos de productores
 tipoNumero = ['1', '2', '3', '4', '5']  #elementos de productores
@@ -53,9 +53,9 @@ for i in range(0,TamBuffer):
 #creacion de nombres de archivos
 for f in range(0,len(tipoLetra)):
     indices[f] = str(tipoLetra[f] + ".txt")
+    indices[f+len(tipoLetra)] = str(tipoNumero[f] + ".txt") 
     archivos[f] = open(str(tipoLetra[f]) + ".txt","w+" )
-    #archivos[f+len(tipoLetra)] = "Archivo_" + str(tipoNumero[f]) + ".txt" 
-
+    archivos[f+len(tipoLetra)] = open(str(tipoNumero[f]) + ".txt","w+" )    
 
 # Funciones para los hilos
 def productor(id):
@@ -80,8 +80,24 @@ def productor(id):
 
             if(i%2 == 0):
                 simbolo = numero
-                semGlobalLN.acquire()
+                semGlobalVN.acquire()
                 semZonaCriticaN[aux].acquire()
+
+                if(len(zcNumeros[aux]) is 0):
+                    zcNumeros[aux] = simbolo
+                    print("Hola soy el hilo productor " + str(id)+" produciendo: "+ simbolo)
+                    produccionesN += 1
+                    totalproducidoN += 1
+                    #print(zcLetras)
+                    #print(producciones)
+                    semZonaCriticaN[aux].release()
+                    break
+                
+                else:
+                    semZonaCriticaN[aux].release()
+                    semGlobalVN.release()
+                    time.sleep(0.2)
+                    aux += 1
 
             else:
                 simbolo = letra
@@ -149,28 +165,52 @@ def consumidor(id):
             if(aux >= 4):
                 aux = 0
             
-            semGlobalLL.acquire()
-            semZonaCriticaL[aux].acquire()
-            if(len(zcLetras[aux]) is not 0):
-                letraR = zcLetras[aux]
-                print("Consumidor "+str(id)+" consumiendo: "+ letraR+ " iteracion: "+str(i))
-                zcLetras[aux] = ""
-                consumidosL += 1
-                totalconsumidoL += 1
-                semArchivo.acquire()
-                indice = indices.index(str(letraR)+".txt")
-                archivos[indice].write(letraR + "\n")
-                semArchivo.release()
-                semZonaCriticaL[aux].release()
-                #print(zcLetras)
-                #print(consumidos)
-                break
-                
+            if(i%2 == 0):
+                semGlobalLN.acquire()
+                semZonaCriticaN[aux].acquire()
+                if(len(zcNumeros[aux]) is not 0):
+                    letraR = zcNumeros[aux]
+                    print("Consumidor "+str(id)+" consumiendo: "+ letraR+ " iteracion: "+str(i))
+                    zcNumeros[aux] = ""
+                    consumidosN += 1
+                    totalconsumidoN += 1
+                    semArchivo.acquire()
+                    indice = indices.index(str(letraR)+".txt")
+                    archivos[indice].write(letraR + "\n")
+                    semArchivo.release()
+                    semZonaCriticaN[aux].release()
+                    #print(zcLetras)
+                    #print(consumidos)
+                    break
+                    
+                else:
+                    semZonaCriticaN[aux].release()
+                    semGlobalLN.release()
+                    time.sleep(0.2)
+                    aux += 1
             else:
-                semZonaCriticaL[aux].release()
-                semGlobalLL.release()
-                time.sleep(0.2)
-                aux += 1
+                semGlobalLL.acquire()
+                semZonaCriticaL[aux].acquire()
+                if(len(zcLetras[aux]) is not 0):
+                    letraR = zcLetras[aux]
+                    print("Consumidor "+str(id)+" consumiendo: "+ letraR+ " iteracion: "+str(i))
+                    zcLetras[aux] = ""
+                    consumidosL += 1
+                    totalconsumidoL += 1
+                    semArchivo.acquire()
+                    indice = indices.index(str(letraR)+".txt")
+                    archivos[indice].write(letraR + "\n")
+                    semArchivo.release()
+                    semZonaCriticaL[aux].release()
+                    #print(zcLetras)
+                    #print(consumidos)
+                    break
+                    
+                else:
+                    semZonaCriticaL[aux].release()
+                    semGlobalLL.release()
+                    time.sleep(0.2)
+                    aux += 1
 
         #Letras
         if(consumidosL == 4):
@@ -191,7 +231,7 @@ def consumidor(id):
             semGlobalVN.release()
             consumidosN = 0
 
-        if(totalconsumidoL == totalAconsumirL):
+        if(totalconsumidoN == totalAconsumirN):
             break
 
     print("Consumidor "+str(id)+" termino de consumir")
