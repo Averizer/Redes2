@@ -73,8 +73,7 @@ def productor(id):
                 else:
                     semZonaCriticaL[aux].release()
                     aux += 1
-    semZonaCriticaL[aux].release()
-    semZonaCriticaN[aux].release()
+    
     print("Productor "+str(id)+" termino de producir")                
     
 
@@ -115,12 +114,12 @@ def consumidor(id):
                         time.sleep(0.3)
                         break
                     else:
-                        semZonaCriticaN[aux].release()
+                        #semZonaCriticaN[aux].release()
                         time.sleep(0.3)
                         aux += 1
                         
                 else:
-                    semZonaCriticaN[aux].release()
+                    #semZonaCriticaN[aux].release()
                     aux += 1
                     time.sleep(0.3)
             else: #letras
@@ -147,13 +146,13 @@ def consumidor(id):
                         time.sleep(0.4)
                         break
                     else:
-                        semZonaCriticaL[aux].release()
+                        #semZonaCriticaL[aux].release()
                         time.sleep(0.4)
                         aux += 1
                         
                         
                 else:
-                    semZonaCriticaL[aux].release()
+                    #semZonaCriticaL[aux].release()
                     aux += 1
                     time.sleep(0.4)
     semZonaCriticaL[aux].release()
