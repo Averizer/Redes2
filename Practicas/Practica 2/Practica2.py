@@ -30,7 +30,7 @@ for i in range(0,TamBuffer):
 #creacion de nombres de archivos
 for f in range(0,len(tipoLetra)):
     archivos[f] = "Archivo_" + str(tipoLetra[f]) + ".txt"
-    archivos[f+len(tipoLetra)] = "Archivo_" + str(tipoNumero[f]) + ".txt"
+    archivos[f+len(tipoLetra)] = "Archivo_" + str(tipoNumero[f]) + ".txt" 
 
 
 # Funciones para los hilos
