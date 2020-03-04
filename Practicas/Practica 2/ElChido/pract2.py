@@ -6,7 +6,7 @@ import time
 #Constantes
 productores = 5 #numero de productores
 consumidores = 5 #numero de consumidores
-Nproducciones = 3 #numero de producciones
+Nproducciones = 10000 #numero de producciones
 TamBuffer = 4   #tamaño del buffer o seccion crítica
 tipoLetra = ['A', 'B', 'C', 'D', 'E']   #elementos de productores
 tipoNumero = ['1', '2', '3', '4', '5']  #elementos de productores
@@ -96,7 +96,7 @@ def productor(id):
                 else:
                     semZonaCriticaN[aux].release()
                     semGlobalVN.release()
-                    time.sleep(0.2)
+                    #time.sleep(0.2)
                     aux += 1
 
             else:
@@ -117,7 +117,7 @@ def productor(id):
                 else:
                     semZonaCriticaL[aux].release()
                     semGlobalVL.release()
-                    time.sleep(0.2)
+                    #time.sleep(0.2)
                     aux += 1
         #letras
         if(produccionesL == TamBuffer):
@@ -175,14 +175,12 @@ def consumidor(id):
                     archivos[indice].write(letraR + "\n")
                     semArchivo.release()
                     semZonaCriticaN[aux].release()
-                    #print(zcLetras)
-                    #print(consumidos)
                     break
                     
                 else:
                     semZonaCriticaN[aux].release()
                     semGlobalLN.release()
-                    time.sleep(0.2)
+                    #time.sleep(0.2)
                     aux += 1
             else:
                 semGlobalLL.acquire()
@@ -198,14 +196,12 @@ def consumidor(id):
                     archivos[indice].write(letraR + "\n")
                     semArchivo.release()
                     semZonaCriticaL[aux].release()
-                    #print(zcLetras)
-                    #print(consumidos)
                     break
                     
                 else:
                     semZonaCriticaL[aux].release()
                     semGlobalLL.release()
-                    time.sleep(0.2)
+                    #time.sleep(0.2)
                     aux += 1
 
         #Letras
@@ -252,7 +248,7 @@ for i in range(5):
     p2 = hilosC[i]
     p2.join()
 
-
+#Cierre de archivos
 for f in range(0,len(tipoLetra)):
     archivos[f].close()
 
