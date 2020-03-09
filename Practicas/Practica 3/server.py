@@ -6,7 +6,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind the socket to the port
 server_address = ('localhost', 12333)
-print('starting up on {} port {}'.format(*server_address))
+print('Levantando servidor {} en el puerto {}'.format(*server_address))
 sock.bind(server_address)
 
 # Listen for incoming connections
@@ -17,17 +17,17 @@ while True:
     print('waiting for a connection')
     connection, client_address = sock.accept()
     try:
-        print('connection from', client_address)
+        print('Conexion del cliente: ', client_address)
 
         # Receive the data in small chunks and retransmit it
         while True:
-            data = connection.recv(16)
-            print('received {!r}'.format(data))
+            data = connection.recv(1024)
+            print('Recibido del cliente: {!r}'.format(data))
             if data:
-                print('sending data back to the client')
+                print('Regresando información al cliente')
                 connection.sendall(data)
             else:
-                print('no data from', client_address)
+                print('No mas información del cliente: ', client_address)
                 break
 
     finally:
