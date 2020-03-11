@@ -41,12 +41,9 @@ while nuevo:
                 sock.send(contenido)
                 contenido = file.read(1024)
             print("Archivo enviado correctamente")
-            if(op == 3):
-                nuevo = 0
-        # Look for the response
-        
-
-        
+        if(op == 3):
+            nuevo = 0
+        # Look for the response                
             
     finally:
         print('Cerrando canal de comunicación del cliente')
