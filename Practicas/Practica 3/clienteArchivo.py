@@ -50,4 +50,5 @@ while nuevo:
             
     finally:
         print('Cerrando canal de comunicación del cliente')
-        #sock.close()
+        
+sock.close()
