@@ -22,7 +22,7 @@ def realizarPing(inicio,fin, ip):
 def conocer_entorno():
     nombre_equipo = s.gethostname()
     if(platform.system().lower() == "windows"):
-        mine = os.popen('netsh interface ipv4 show config Wi-Fi ')
+        mine = os.popen('netsh interface ipv4 show config ethernet')
         direccion_ip = mine.read()
         mine.close()
         direccion_ip = direccion_ip.split()
@@ -81,10 +81,7 @@ def encontrar_ip():
     print(ip_activos)
 
 
-
 encontrar_ip()
-
-
 #Proceso para realizar la interfaz grafica de usuario
 ventana = tkinter.Tk()
 ventana.geometry("500x600")
