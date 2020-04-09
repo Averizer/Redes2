@@ -1,14 +1,13 @@
 import socket
-import struct
-import sys
 
-message = sys.argv[1] if len(sys.argv) > 1 else 'message via multicast'
+#Se tiene que tener un grupo y el puerto
+MCAST_GRP = '224.1.1.1'
+MCAST_PORT = 5007
 
-multicast_addr = '224.0.0.1'
-port = 3000
+MULTICAST_TTL = 2
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-ttl = struct.pack('b', 1)
-sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
-sock.sendto(sys.argv[1], (multicast_addr, port))
-sock.close()
+#Establecer UDP y multicast
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, MULTICAST_TTL)
+
+sock.sendto(b"Mensaje a mandar", (MCAST_GRP, MCAST_PORT))

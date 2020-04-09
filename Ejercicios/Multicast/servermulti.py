@@ -1,18 +1,21 @@
 import socket
 import struct
 
-multicast_addr = '224.0.0.1'
-bind_addr = '0.0.0.0'
-port = 3000
+MCAST_GRP = '224.1.1.1'
+MCAST_PORT = 5007
+IS_ALL_GROUPS = True
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-membership = socket.inet_aton(multicast_addr) + socket.inet_aton(bind_addr)
-
-sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, membership)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+if IS_ALL_GROUPS:
+    # Recibe todos los grupos de multicast
+    sock.bind(('', MCAST_PORT))
+else:
+    # Escucha solo grupos específicos
+    sock.bind((MCAST_GRP, MCAST_PORT))
+mreq = struct.pack("4sl", socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
 
-sock.bind((bind_addr, port))
+sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 while True:
-    message, address = sock.recvfrom(255)
-    print message
+  print (sock.recv(10240))
