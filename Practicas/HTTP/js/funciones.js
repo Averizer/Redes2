@@ -11,21 +11,21 @@ function mostrarTFTP() {
     }
 }
 function mostrarDNS() {
-    var tftp = document.getElementById("dhcp");
+    var tftp = document.getElementById("tftp");
     var dns = document.getElementById("dns");
-    var dhcp = document.getElementById("tftp");
+    var dhcp = document.getElementById("dhcp");
     if (dns.style.display === "none") {
-        tftp.style.display = "block";
-        dns.style.display = "none";
+        tftp.style.display = "none";
+        dns.style.display = "block";
         dhcp.style.display = "none";
     } else {
         dns.style.display = "block";
     }
 }
 function mostrarDHCP() {
-    var tftp = document.getElementById("dhcp");
+    var tftp = document.getElementById("tftp");
     var dns = document.getElementById("dns");
-    var dhcp = document.getElementById("tftp");
+    var dhcp = document.getElementById("dhcp");
     if (dhcp.style.display === "none") {
         tftp.style.display = "none";
         dns.style.display = "none";

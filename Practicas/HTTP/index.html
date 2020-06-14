@@ -28,25 +28,21 @@
                 <tr>
                     <td><strong>Protocolo &nbsp&nbsp&nbsp&nbsp&nbsp   </strong></td>
                     <td><strong>Acciones &nbsp&nbsp&nbsp&nbsp&nbsp</strong></td>
-                    <td><strong>-&nbsp&nbsp&nbsp</strong></td>
                 </tr>
                 <tr>
                     <td>TFTP</td>
-                    <td>Chicago</td>
                     <td>
                         <button onclick="mostrarTFTP()">Seleccionar</button>
                     </td>
                 </tr>
                 <tr>
                     <td>DNS</td>
-                    <td>Wisconsin</td>
                     <td>
                         <button onclick="mostrarDNS()">Seleccionar</button>
                     </td>
                 </tr>
                 <tr>
                     <td>DHCP</td>
-                    <td>Madison</td>
                     <td>
                         <button onclick="mostrarDHCP()">Seleccionar</button>
                     </td>
@@ -66,11 +62,36 @@
             <button onclick="tftpBackup()">Excecute</button>
             
         </div>
+
         <div id="dns" style="display:none;">
-            <p>HOLA DNS</p>
+            <p></p>
+            Has seleccionado DNS, aquí puedes agregar una entrada de red para Zona directa
+            y zona inversa.
+            <p></p>
+            Ingresa el nombre de la ip (Ej. pcn.prueba.com): 
+            <input type="text" name="subred"><br>
+            Ingresa la direccion ip a nombrar:
+            <input type="text" name="mascara"><br>
+            Ingresa identificador para la Zona inversa:
+            <input type="text" name="gateway"><br>
+            
         </div>
+
         <div id="dhcp" style="display:none;">
-            <p>HOLA DHCP</p>
+            <p></p>
+            Has seleccionado DHCP, aquí podras agregar una subred a la configuracion
+            <p></p>
+            Ingresa la subred: 
+            <input type="text" name="subred"><br>
+            Ingresa la mascara de subred:
+            <input type="text" name="mascara"><br>
+            Ingresa la puerta de enlace predeterminada:
+            <input type="text" name="gateway"><br>
+            Ingresa el rango que quieres asignar: &nbsp;
+            <input type="text" name="rangomin" value="Ingresa ip minima"/>
+            <input type="text" name="rangomax" value="Ingresa ip maxima"/>
+            <p></p>
+            <button onclick="dhcpUpdate()">Excecute</button>
         </div>
     </body>
 </html>
