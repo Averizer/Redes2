@@ -33,25 +33,44 @@
                 <tr>
                     <td>TFTP</td>
                     <td>Chicago</td>
-                    <td><form>
+                    <td>
                         <button onclick="mostrarTFTP()">Seleccionar</button>
-                    </form></td>
+                    </td>
                 </tr>
                 <tr>
                     <td>DNS</td>
                     <td>Wisconsin</td>
-                    <td><form>
+                    <td>
                         <button onclick="mostrarDNS()">Seleccionar</button>
-                    </form></td>
+                    </td>
                 </tr>
                 <tr>
                     <td>DHCP</td>
                     <td>Madison</td>
-                    <td><form>
+                    <td>
                         <button onclick="mostrarDHCP()">Seleccionar</button>
-                    </form></td>
+                    </td>
                 </tr>
             </tbody>
         </table>
+
+        <div id="tftp" style="display:none;">
+            
+            <p>Selecciona un router al cual hacerle backup</p>
+            <select id="routers">
+                <option value="1">Router 1</option>
+                <option value="2" selected="selected">Router 2</option>
+                <option value="3">Router 3</option>
+            </select>
+            <p></p>
+            <button onclick="tftpBackup()">Excecute</button>
+            
+        </div>
+        <div id="dns" style="display:none;">
+            <p>HOLA DNS</p>
+        </div>
+        <div id="dhcp" style="display:none;">
+            <p>HOLA DHCP</p>
+        </div>
     </body>
 </html>
