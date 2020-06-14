@@ -1,0 +1,57 @@
+<!-- #######  THIS IS A COMMENT - Visible only in the source editor #########-->
+<html>
+    <h2>Gestor de protocolos TFTP, DNS, DHCP</h2>
+    <body>
+        <script src="js/funciones.js"></script>
+        <p style="font-size: 1.5em;">
+            Esta pagina esta destinada a  
+            <strong style="background-color: #317399; padding: 0 5px; color: #fff;">
+            Gestionar</strong> 
+            protocolos vistos en clase así como el protocolo que es si 
+            mismo levanta esta pagina.
+        </p>
+        <p style="font-size: 1.5em;">
+            Las configuraciones posibles serán:
+        </p>
+        <p>
+            &nbsp&nbsp&nbsp&nbsp&nbsp TFTP: Permite hacer la copia de seguridad de los routers.
+        </p>
+        <p>
+            &nbsp&nbsp&nbsp&nbsp&nbsp DNS: Agregar una nueva entrada en la tabla de zona directa e inversa.
+        </p>
+        <p>
+            &nbsp&nbsp&nbsp&nbsp&nbsp DHCP: Agregar una subred gestionando el rango de redes.
+        </p>
+
+        <table class="Table">
+            <tbody>
+                <tr>
+                    <td><strong>Protocolo &nbsp&nbsp&nbsp&nbsp&nbsp   </strong></td>
+                    <td><strong>Acciones &nbsp&nbsp&nbsp&nbsp&nbsp</strong></td>
+                    <td><strong>-&nbsp&nbsp&nbsp</strong></td>
+                </tr>
+                <tr>
+                    <td>TFTP</td>
+                    <td>Chicago</td>
+                    <td><form>
+                        <button onclick="mostrarTFTP()">Seleccionar</button>
+                    </form></td>
+                </tr>
+                <tr>
+                    <td>DNS</td>
+                    <td>Wisconsin</td>
+                    <td><form>
+                        <button onclick="mostrarDNS()">Seleccionar</button>
+                    </form></td>
+                </tr>
+                <tr>
+                    <td>DHCP</td>
+                    <td>Madison</td>
+                    <td><form>
+                        <button onclick="mostrarDHCP()">Seleccionar</button>
+                    </form></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
