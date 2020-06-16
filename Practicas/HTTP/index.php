@@ -1,4 +1,4 @@
-<!-- #######  THIS IS A COMMENT - Visible only in the source editor #########-->
+<!DOCTYPE html>
 <html>
     
     <link rel="stylesheet" href="css/styles.css"/>
@@ -7,7 +7,36 @@
         body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
     </style>
     <body class="w3-black">
+    <?php
+        if(array_key_exists('tftpBtn',$_POST)){
+        tftpphp();
+        }
+        else if(array_key_exists('dnsBtn',$_POST)){
+            dnsphp();
+        }
+        else if(array_key_exists('dchpBtn',$_POST)){
+            dhcpdns();
+        }
+
+        function tftpphp()
+        {
+            shell_exec('COMANDO AQUI');
+        }
         
+        function dnsphp()
+        {
+            shell_exec('COMANDO AQUI');
+        }
+
+        
+        
+        function dhcpdns()
+        {
+            shell_exec('COMANDO AQUI');
+        }
+
+        
+    ?>
         <header class="w3-container w3-center w3-padding-48 w3-white">
           <h1 class="w3-xxxlarge"><b>Gestor de protocolos</b></h1>
           <h6><span class="w3-tag"> TFTP, DNS, DHCP</span></h6>
@@ -71,7 +100,10 @@
             </select>
             <br>
             <br>
-            <button class="w3-button w3-light-grey w3-padding-short" onclick="tftpBackup()">Excecute</button>
+            <form method="post">
+                <input type="submit" id="tftpphp" name="tftpphp" value="Excecute"/>
+            </form>
+            <!--button class="w3-button w3-light-grey w3-padding-short" onclick="tftpBackup()">Excecute</button-->
             
         </div>
     </center>
@@ -90,7 +122,10 @@
             <input type="text" name="gateway">
             <br>
             <br>
-            <button class="w3-button w3-light-grey w3-padding-short" onclick="dnsUpdate()">Excecute</button>
+            <form method="post">
+                <input type="submit" id="dnsphp" name="dnsphp" value="Excecute"/>
+            </form>
+            <!--button class="w3-button w3-light-grey w3-padding-short" onclick="dnsUpdate()">Excecute</button-->
             
         </div>
     </center>
@@ -111,7 +146,10 @@
             <input type="text" name="rangomax" value="Ingresa ip maxima"/>
             <br>
             <br>
-            <button class="w3-button w3-light-grey w3-padding-short" onclick="dhcpUpdate()">Excecute</button>
+            <form method="post">
+                <input type="submit" id="dhcpphp" name="dhcpphp" value="Excecute"/>
+            </form>
+            <!--button class="w3-button w3-light-grey w3-padding-short" onclick="dhcpUpdate()">Excecute</button-->
         </div>
     </center>        
     </body>

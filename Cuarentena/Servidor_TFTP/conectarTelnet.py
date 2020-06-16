@@ -1,4 +1,3 @@
-
 import sys
 import telnetlib
 import datetime
