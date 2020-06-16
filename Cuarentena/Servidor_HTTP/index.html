@@ -1,0 +1,116 @@
+<!-- #######  THIS IS A COMMENT - Visible only in the source editor #########-->
+<html>
+    
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+    <style>
+        body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+    </style>
+    <body class="w3-black">
+        
+        <header class="w3-container w3-center w3-padding-48 w3-white">
+          <h1 class="w3-xxxlarge"><b>Gestor de protocolos</b></h1>
+          <h6><span class="w3-tag"> TFTP, DNS, DHCP</span></h6>
+          Hello, today is <?php echo date('l, F jS, Y'); ?>
+        </header>
+    <center>
+        <script src="js/funciones.js"></script>
+        
+        <h2>
+            Las configuraciones posibles serán:
+        </h2>
+        <p>
+            &nbsp&nbsp&nbsp&nbsp&nbsp TFTP: Permite hacer la copia de seguridad de los routers.
+        </p>
+        <p>
+            &nbsp&nbsp&nbsp&nbsp&nbsp DNS: Agregar una nueva entrada en la tabla de zona directa e inversa.
+        </p>
+        <p>
+            &nbsp&nbsp&nbsp&nbsp&nbsp DHCP: Agregar una subred gestionando el rango de redes.
+        </p>
+    </center>
+    <center>
+        <table class="Table">
+            <tbody>
+                <tr>
+                    <td><strong>Protocolo &nbsp&nbsp&nbsp&nbsp&nbsp   </strong></td>
+                    <td><strong> &nbsp&nbsp&nbsp&nbsp&nbsp</strong></td>
+                </tr>
+                <tr>
+                    <td>TFTP</td>
+                    <td>
+                        <button class="w3-button w3-light-grey w3-padding-large w3-section" onclick="mostrarTFTP()">Seleccionar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>DNS</td>
+                    <td>
+                        <button class="w3-button w3-light-grey w3-padding-large w3-section" onclick="mostrarDNS()">Seleccionar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>DHCP</td>
+                    <td>
+                        <button class="w3-button w3-light-grey w3-padding-large w3-section" onclick="mostrarDHCP()">Seleccionar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+
+    <center>
+        <div id="tftp" style="display:none;">
+            
+            <p>Selecciona un router al cual hacerle backup</p>
+            <select id="routers">
+                <option value="1">Router 1</option>
+                <option value="2" selected="selected">Router 2</option>
+                <option value="3">Router 3</option>
+            </select>
+            <br>
+            <br>
+            <button class="w3-button w3-light-grey w3-padding-short" onclick="tftpBackup()">Excecute</button>
+            
+        </div>
+    </center>
+
+    <center>
+        <div id="dns" style="display:none;">
+            <p></p>
+            Has seleccionado DNS, aquí puedes agregar una entrada de red para Zona directa
+            y zona inversa.
+            <p></p>
+            Ingresa el nombre de la ip (Ej. pcn.prueba.com): 
+            <input type="text" name="subred"><br>
+            Ingresa la direccion ip a nombrar:
+            <input type="text" name="mascara"><br>
+            Ingresa identificador para la Zona inversa:
+            <input type="text" name="gateway">
+            <br>
+            <br>
+            <button class="w3-button w3-light-grey w3-padding-short" onclick="dnsUpdate()">Excecute</button>
+            
+        </div>
+    </center>
+    
+    <center>
+        <div id="dhcp" style="display:none;">
+            <p></p>
+            Has seleccionado DHCP, aquí podras agregar una subred a la configuracion
+            <p></p>
+            Ingresa la subred: 
+            <input type="text" name="subred"><br>
+            Ingresa la mascara de subred:
+            <input type="text" name="mascara"><br>
+            Ingresa la puerta de enlace predeterminada:
+            <input type="text" name="gateway"><br>
+            Ingresa el rango que quieres asignar: &nbsp;
+            <input type="text" name="rangomin" value="Ingresa ip minima"/>
+            <input type="text" name="rangomax" value="Ingresa ip maxima"/>
+            <br>
+            <br>
+            <button class="w3-button w3-light-grey w3-padding-short" onclick="dhcpUpdate()">Excecute</button>
+        </div>
+    </center>        
+    </body>
+</html>
