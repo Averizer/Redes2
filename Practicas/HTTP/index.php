@@ -1,48 +1,42 @@
-<!DOCTYPE html>
+<!-- #######  THIS IS A COMMENT - Visible only in the source editor #########-->
 <html>
-    
+    <head>
     <link rel="stylesheet" href="css/styles.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
     <style>
         body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
     </style>
+    </head>
+
     <body class="w3-black">
     <?php
-        if(array_key_exists('tftpBtn',$_POST)){
-        tftpphp();
-        }
-        else if(array_key_exists('dnsBtn',$_POST)){
-            dnsphp();
-        }
-        else if(array_key_exists('dchpBtn',$_POST)){
-            dhcpdns();
-        }
-
-        function tftpphp()
-        {
-            shell_exec('COMANDO AQUI');
-        }
-        
-        function dnsphp()
-        {
-            shell_exec('COMANDO AQUI');
-        }
-
-        
-        
-        function dhcpdns()
-        {
-            shell_exec('COMANDO AQUI');
-        }
-
-        
-    ?>
+	if(array_key_exists('tftpBtn',$_POST)){ tftp();}
+	else if(array_key_exists('dnsBtn',$_POST)){ dns();}
+	else if(array_key_exists('dhcpBtn',$_POST)){ dhcp();}
+	function tftp(){
+		$router = $_POST['routers'];
+		shell_exec("python3 /var/www/html/Script/conectarTelnet.py");
+		alert("Archivo de router $router recuperado");
+	}
+	function dns(){
+		$dominio = $_POST['dominio'];
+		$ip = $_POST['ip'];
+		$zonei = $_POST['zonei'];
+		shell_exec("python3 /var/www/html/Script/DNS.py");
+		alert("Nuevo dominio agregado");
+	}
+	function dhcp(){
+		shell_exec("python3 /var/www/html/Script/DHCP.py");
+		alert("Nueva subred agregada");
+	}
+	function alert($msg){
+		echo "<script type'text/javascript'>alert('$msg');</script>";
+	}
+	
+    ?>        
         <header class="w3-container w3-center w3-padding-48 w3-white">
           <h1 class="w3-xxxlarge"><b>Gestor de protocolos</b></h1>
           <h6><span class="w3-tag"> TFTP, DNS, DHCP</span></h6>
-          <button onclick="window.open('file:///C:/Windows/notepad.exe')">
-            Launch notepad
-     </button>
         </header>
     <center>
         <script src="js/funciones.js"></script>
@@ -91,47 +85,43 @@
 
     <center>
         <div id="tftp" style="display:none;">
-            
+	<form action="index.php" method="post" >
             <p>Selecciona un router al cual hacerle backup</p>
-            <select id="routers">
+            <select id="routers" name="routers">
                 <option value="1">Router 1</option>
                 <option value="2" selected="selected">Router 2</option>
                 <option value="3">Router 3</option>
             </select>
             <br>
             <br>
-            <form method="post">
-                <input type="submit" id="tftpphp" name="tftpphp" value="Excecute"/>
-            </form>
-            <!--button class="w3-button w3-light-grey w3-padding-short" onclick="tftpBackup()">Excecute</button-->
-            
+	    <input type="submit" id="tftpBtn" name="tftpBtn" value="Execute" />
+	</form>
         </div>
     </center>
 
     <center>
         <div id="dns" style="display:none;">
+	<form action="index.php" method="post" >
             <p></p>
             Has seleccionado DNS, aquí puedes agregar una entrada de red para Zona directa
             y zona inversa.
             <p></p>
             Ingresa el nombre de la ip (Ej. pcn.prueba.com): 
-            <input type="text" name="subred"><br>
+            <input type="text" name="dominio"><br>
             Ingresa la direccion ip a nombrar:
-            <input type="text" name="mascara"><br>
+            <input type="text" name="ip"><br>
             Ingresa identificador para la Zona inversa:
-            <input type="text" name="gateway">
+            <input type="text" name="zonei">
             <br>
             <br>
-            <form method="post">
-                <input type="submit" id="dnsphp" name="dnsphp" value="Excecute"/>
-            </form>
-            <!--button class="w3-button w3-light-grey w3-padding-short" onclick="dnsUpdate()">Excecute</button-->
-            
+	    <input type="submit" id="dnsBtn" name="dnsBtn" value="Execute" />
+	</form>            
         </div>
     </center>
     
     <center>
         <div id="dhcp" style="display:none;">
+	<form action="index.php" method="post" >
             <p></p>
             Has seleccionado DHCP, aquí podras agregar una subred a la configuracion
             <p></p>
@@ -146,10 +136,8 @@
             <input type="text" name="rangomax" value="Ingresa ip maxima"/>
             <br>
             <br>
-            <form method="post">
-                <input type="submit" id="dhcpphp" name="dhcpphp" value="Excecute"/>
-            </form>
-            <!--button class="w3-button w3-light-grey w3-padding-short" onclick="dhcpUpdate()">Excecute</button-->
+	    <input type="submit" id="dhcpBtn" name="dhcpBtn" value="Execute" />
+	</form>
         </div>
     </center>        
     </body>

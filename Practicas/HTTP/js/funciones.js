@@ -36,9 +36,6 @@ function mostrarDHCP() {
 }
 
 function tftpBackup(){
-    var e = document.getElementById("routers");
-    var seleccionado = e.options[e.selectedIndex].value;
-
-    alert("Router seleccionado: " + seleccionado);
-    
+    var opcion = document.getElementById("routers").value;
+    alert("El archivo de configuracion del router "+opcion+" ha sido obtenido");
 }
